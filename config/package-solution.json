@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "show-all-users-client-side-solution",
+    "id": "3b5751d6-88ad-4e8b-accf-622ea5542be0",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false,
+    "webApiPermissionRequests": [
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementApps.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementApps.ReadWrite.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementConfiguration.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementConfiguration.ReadWrite.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementManagedDevices.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementManagedDevices.ReadWrite.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementServiceConfig.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "DeviceManagementServiceConfig.ReadWrite.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Directory.AccessAsUser.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Directory.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "Directory.ReadWrite.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.Read.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.ReadBasic.All"
+      },
+      {
+        "resource": "Microsoft Graph",
+        "scope": "User.ReadWrite.All"
+      },
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/show-all-users.sppkg"
+  }
+}
