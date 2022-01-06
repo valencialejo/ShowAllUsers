@@ -1,5 +1,8 @@
 export interface IDates{
-    fullDate?:string;
-    day?:string;
-    month?:string;
+    fullInitDate?:string;
+    dayInitDate?:string;
+    monthInitDate?:string;
+    fullEndDate?:string;
+    dayEndDate?:string;
+    monthEndDate?:string;
 }

@@ -17,6 +17,7 @@ import {
   DetailsListLayoutMode,
   CheckboxVisibility,
   SelectionMode,
+  List,
 } from 'office-ui-fabric-react';
 
 import * as strings from 'ShowAllUsersWebPartStrings';
@@ -105,16 +106,20 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
     super(props);
 
     //Inicializar el State
-    let date=new Date('2021-06-22');
-    
+    var InitDate:Date=new Date(2000,0,7);
+    var EndDate:Date=new Date(2000,0,12);
+
     this.state = {
       user: undefined,
       users: [],
       usersView:[],
       dateofSearch: {
-        fullDate:date.toString(),
-        day:date.getUTCDate().toString(),
-        month:(date.getUTCMonth()+1).toString(),
+        fullInitDate:InitDate.toString(),
+        dayInitDate:InitDate.getUTCDate().toString(),
+        monthInitDate:(InitDate.getUTCMonth()+1).toString(),
+        fullEndDate:EndDate.toString(),
+        dayEndDate:EndDate.getUTCDate().toString(),
+        monthEndDate:(EndDate.getUTCMonth()+1).toString(),
       },
     };
   }
@@ -140,12 +145,6 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
   // }
 
   public fetchUserDetails(): void {
-
-    var birthdaytype:string;
-
-    // if(this.props.webparttype=='today'){
-    //   birthdaytype=
-    // }
 
     this.props.context.msGraphClientFactory.getClient().then((client: MSGraphClient): void => {
       client
@@ -183,17 +182,26 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                 .select("birthday,aboutMe")
   
                 .get().then((response) => {
-                  let userBirthday=new Date(response.birthday);
-                  this.setState({ user:{...user, birthday:response.birthday,birthdayDate:userBirthday.getUTCDate().toString(),birthdayMonth:(userBirthday.getUTCMonth()+1).toString(),aboutMe:response.aboutMe} });
-                  console.log(user.displayName+user.mail+response.birthday+(response.birthday>'1997-06-01' && response.birthday<'1997-06-30'));
-                });
-              
+
+                  let userBirthday1=new Date(response.birthday);
+                  let userBirthdayDay=userBirthday1.getUTCDate();
+                  let userBirthdayMonth=userBirthday1.getMonth();
+                  let userBirthday=new Date(2000,userBirthdayMonth,userBirthdayDay);
+
+                  // var InitDate:Date=new Date(2000,0,7);
+                  // var EndDate:Date=new Date(2000,0,12);
+
+                  // let str1=userBirthday.toString();
+                  // let str2=(userBirthday>=InitDate && userBirthday<=EndDate).toString();
+                  // console.log(str1.concat(str2));
+                  
+                  this.setState({ user:{...user, birthday:userBirthday,aboutMe:response.aboutMe} });
+                  //console.log(user.displayName+user.mail+response.birthday+(response.birthday>'1997-06-01' && response.birthday<'1997-06-30'));
+                }); 
               allUsers.push(this.state.user);
             }
           });
           
-          //console.log(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate(),date.getHours(),date.getMinutes(),date.getSeconds()));
-          //console.log(this)
           this.setState({ users: allUsers });
           //console.log(this.state.users);
           //console.log(this.props.webparttype);
@@ -203,39 +211,55 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
 
   public render(): React.ReactElement<IShowAllUsersProps> {
     return (
-      <div className={styles.showAllUsers}>
-        {/* <TextField
-          label={strings.SearchFor}
-          required={true}
-          value={this.state.searchFor}
-          onChanged={this._onSearchForChanged}
-          onGetErrorMessage={this._getSearchForErrorMessage}
-        /> */}
-
-        {/* <p className={styles.title}>
-          <PrimaryButton
-            text='Search'
-            title='Search'
-            onClick={this._search}
+      <div>
+        {this.state.users.filter(user=>user.birthday>=this.props.InitDate && user.birthday<=this.props.EndDate ).map(filteredUser=>(
+          <>
+          <TextField
+            label='Nombre'
+            value={filteredUser.displayName} />
+          <TextField
+            label='Cumpleaños'
+            value={filteredUser.birthday.toString()}
           />
-      </p> */}
-        {
-          (this.state.users != null && this.state.users.length > 0) ?
-            <p className={styles.row}>
-              <p>{this.props.webparttype}</p>
-              <DetailsList
-                items={this.state.users.filter(user=>user.birthdayDate==this.state.dateofSearch.day && user.birthdayMonth==this.state.dateofSearch.month)}
-                columns={_usersListColumns}
-                setKey='set'
-                checkboxVisibility={CheckboxVisibility.onHover}
-                selectionMode={SelectionMode.single}
-                layoutMode={DetailsListLayoutMode.fixedColumns}
-                compact={true}
-              />
-            </p>
-            : null
-        }
+          </>
+        ))}
       </div>
     );
-  }
+    // return (
+    //   <div className={styles.showAllUsers}>
+    //     {/* <TextField
+    //       label={strings.SearchFor}
+    //       required={true}
+    //       value={this.state.searchFor}
+    //       onChanged={this._onSearchForChanged}
+    //       onGetErrorMessage={this._getSearchForErrorMessage}
+    //     /> */}
+
+    //     {/* <p className={styles.title}>
+    //       <PrimaryButton
+    //         text='Search'
+    //         title='Search'
+    //         onClick={this._search}
+    //       />
+    //   </p> */}
+    //     {
+    //       (this.state.users != null && this.state.users.length > 0) ?
+    //         <p className={styles.row}>
+    //           <p>{this.props.webparttype}</p>
+    //           <DetailsList
+    //             items={this.state.users.filter(user=>user.birthdayDate==this.state.dateofSearch.dayInitDate && user.birthdayMonth==this.state.dateofSearch.monthInitDate)}
+    //             columns={_usersListColumns}
+    //             setKey='set'
+    //             checkboxVisibility={CheckboxVisibility.onHover}
+    //             selectionMode={SelectionMode.single}
+    //             layoutMode={DetailsListLayoutMode.fixedColumns}
+    //             compact={true}
+    //           />
+    //         </p>
+    //         : null
+    //     }
+    //   </div>
+    // );
+  // }
+}
 }

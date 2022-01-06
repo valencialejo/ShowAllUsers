@@ -21,7 +21,8 @@
     "description": { "default": "ShowAllUsers description" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "ShowAllUsers"
+      "description": "ShowAllUsers",
+      "webparttype":"today"
     }
   }]
 }

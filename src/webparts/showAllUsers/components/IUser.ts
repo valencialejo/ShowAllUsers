@@ -5,7 +5,7 @@ export interface IUser{
     mail:string;
     mobilePhone:string;
     userPrincipalName:string;
-    birthday?:string;
+    birthday?:Date;
     birthdayDate?:string;
     birthdayMonth?:string;
     accountEnabled?:Boolean;
