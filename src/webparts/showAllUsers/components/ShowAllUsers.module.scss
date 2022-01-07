@@ -2,9 +2,9 @@
 
 .showAllUsers {
   .container {
-    max-width: 700px;
-    margin: 0px auto;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    background-color: $ms-color-themeDark;
+    border-style: solid;
+    padding:20px;
   }
 
   .row {
@@ -70,5 +70,54 @@
       vertical-align: top;
       display: inline-block;
     }
+  }
+
+  .birthdayCard{
+    border-style:solid; //Quitar
+    width: 420px;
+    height: 230px;
+    background: #FFFFFF;
+    opacity: 1;
+    position: relative;
+
+    .birthdayImg{
+      position:absolute;
+      top:0px;
+      left:0px;
+      width: 150.21px;
+      height: 230px;
+      border-style:solid;
+    }
+    .birthdayContent{
+      position:absolute;
+      top: 33px;
+      left: 208.54px;
+      width: 177.21px;
+      height: 164.42px;
+      opacity: 1;
+      border-style: solid;
+    }
+    .birthdayCardProfileImg{
+      position: absolute;
+      top:40px;
+      left:26px;
+      width: 151px;
+      height: 151px;        
+      border-radius: 50%;
+      border-style: solid;
+
+      .text{
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top:50%;
+        left: 50%;
+        margin-top: -25px;
+        margin-left: -25px;
+        text-align: center;
+      }
+
+    }
+
   }
 }

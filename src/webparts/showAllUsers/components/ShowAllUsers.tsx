@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
 import styles from './ShowAllUsers.module.scss';
 import { IShowAllUsersProps } from './IShowAllUsersProps';
 import { escape } from '@microsoft/sp-lodash-subset';
@@ -132,6 +134,13 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
     this.fetchUserDetails();
   }
 
+  private _formatDate(date:Date):string {
+    const day = date.toLocaleString('default', { day: '2-digit' });
+    const month = date.toLocaleString('default', { month: 'short' });
+    const year = date.toLocaleString('default', { year: 'numeric' });
+    return day + ' ' + month[0].toUpperCase()+month.substring(1,month.length);
+}
+
   // @autobind
   // private _onSearchForChanged(newValue: string): void {
   //   this.setState({
@@ -174,92 +183,52 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                 surname: item.surname,
                 mail: item.mail,
                 mobilePhone: item.mobilePhone,
+                jobTitle:item.jobTitle,
                 userPrincipalName: item.userPrincipalName,};
   
               await client
                 .api(`users/${item.mail}`)
                 .version("v1.0")
-                .select("birthday,aboutMe")
+                .select("birthday,aboutMe,department")
   
-                .get().then((response) => {
+                .get().then((response1) => {
 
-                  let userBirthday1=new Date(response.birthday);
+                  let userBirthday1=new Date(response1.birthday);
                   let userBirthdayDay=userBirthday1.getUTCDate();
                   let userBirthdayMonth=userBirthday1.getMonth();
                   let userBirthday=new Date(2000,userBirthdayMonth,userBirthdayDay);
 
-                  // var InitDate:Date=new Date(2000,0,7);
-                  // var EndDate:Date=new Date(2000,0,12);
-
-                  // let str1=userBirthday.toString();
-                  // let str2=(userBirthday>=InitDate && userBirthday<=EndDate).toString();
-                  // console.log(str1.concat(str2));
-                  
-                  this.setState({ user:{...user, birthday:userBirthday,aboutMe:response.aboutMe} });
-                  //console.log(user.displayName+user.mail+response.birthday+(response.birthday>'1997-06-01' && response.birthday<'1997-06-30'));
+                  this.setState({ user:{...user, birthday:userBirthday,aboutMe:response1.aboutMe,department:response1.department} });
                 }); 
               allUsers.push(this.state.user);
             }
           });
           
           this.setState({ users: allUsers });
-          //console.log(this.state.users);
-          //console.log(this.props.webparttype);
         });
     });
   }
 
   public render(): React.ReactElement<IShowAllUsersProps> {
     return (
-      <div>
-        {this.state.users.filter(user=>user.birthday>=this.props.InitDate && user.birthday<=this.props.EndDate ).map(filteredUser=>(
+      <div className={styles.showAllUsers}>
+        {this.state.users.filter(user=>user.birthday>=this.props.InitDate && user.birthday<=this.props.EndDate).sort((a,b)=>{return a.birthday>b.birthday?1:a.birthday<b.birthday?-1:0;}).map(filteredUser=>(
           <>
-          <TextField
-            label='Nombre'
-            value={filteredUser.displayName} />
-          <TextField
-            label='Cumpleaños'
-            value={filteredUser.birthday.toString()}
-          />
+          <div className={styles.birthdayCard}>
+            <div className={styles.birthdayImg}>Imagen de fondo</div>
+            <div className={styles.birthdayCardProfileImg}><span className={styles.text}>Foto de perfil</span></div>
+            <div className={styles.birthdayContent}>
+              <p>{filteredUser.displayName}</p>
+              <p>{this._formatDate(filteredUser.birthday)}</p>
+              <p>{filteredUser.jobTitle}</p>
+              <p>{filteredUser.department}</p>
+              <p>Mis gustos:</p>
+              <p>{filteredUser.aboutMe}</p>
+            </div>
+          </div>
           </>
         ))}
       </div>
     );
-    // return (
-    //   <div className={styles.showAllUsers}>
-    //     {/* <TextField
-    //       label={strings.SearchFor}
-    //       required={true}
-    //       value={this.state.searchFor}
-    //       onChanged={this._onSearchForChanged}
-    //       onGetErrorMessage={this._getSearchForErrorMessage}
-    //     /> */}
-
-    //     {/* <p className={styles.title}>
-    //       <PrimaryButton
-    //         text='Search'
-    //         title='Search'
-    //         onClick={this._search}
-    //       />
-    //   </p> */}
-    //     {
-    //       (this.state.users != null && this.state.users.length > 0) ?
-    //         <p className={styles.row}>
-    //           <p>{this.props.webparttype}</p>
-    //           <DetailsList
-    //             items={this.state.users.filter(user=>user.birthdayDate==this.state.dateofSearch.dayInitDate && user.birthdayMonth==this.state.dateofSearch.monthInitDate)}
-    //             columns={_usersListColumns}
-    //             setKey='set'
-    //             checkboxVisibility={CheckboxVisibility.onHover}
-    //             selectionMode={SelectionMode.single}
-    //             layoutMode={DetailsListLayoutMode.fixedColumns}
-    //             compact={true}
-    //           />
-    //         </p>
-    //         : null
-    //     }
-    //   </div>
-    // );
-  // }
 }
 }

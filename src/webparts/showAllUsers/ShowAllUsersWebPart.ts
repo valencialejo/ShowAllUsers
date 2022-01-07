@@ -26,6 +26,23 @@ export interface IShowAllUsersWebPartProps {
 
 export default class ShowAllUsersWebPart extends BaseClientSideWebPart<IShowAllUsersWebPartProps> {
 
+  protected onInit():Promise<void>{
+
+    return new Promise<void>((resolve,_reject)=>{
+
+      var currentDate:Date=new Date(); var currentDay=currentDate.getUTCDate(); var currentMonth=currentDate.getUTCMonth();
+      this.properties.InitDate=new Date(2000,currentMonth,currentDay);
+      this.properties.EndDate=new Date(2000,currentMonth,currentDay);
+
+      this.properties.description="ShowAllUsers1";
+      this.properties.webparttype="today";
+
+      console.log(this.properties.InitDate);
+      console.log(this.properties.EndDate);
+      resolve(undefined);
+    });
+  }
+
   public render(): void {
     const element: React.ReactElement<IShowAllUsersProps> = React.createElement(
       ShowAllUsers,
@@ -53,8 +70,8 @@ export default class ShowAllUsersWebPart extends BaseClientSideWebPart<IShowAllU
     
     var currentDate:Date=new Date(); var currentDay=currentDate.getUTCDate(); var currentMonth=currentDate.getUTCMonth();
     
-    this.properties.InitDate=new Date(2000,currentMonth,currentDay); //Esta línea hay quitarla en el momento en que las propiedades puedan ser establecidas desde IShowAllUsersProps.ts
-    this.properties.EndDate=new Date(2000,currentMonth,currentDay); //Same as above
+    this.properties.InitDate=new Date(2000,currentMonth,currentDay);
+    this.properties.EndDate=new Date(2000,currentMonth,currentDay);
     var type=this.properties.webparttype;
     var date=this.properties.InitDate;
     var days: number;
@@ -68,7 +85,7 @@ export default class ShowAllUsersWebPart extends BaseClientSideWebPart<IShowAllU
     }
 
     this.properties.EndDate.setDate(date.getDate()+days);
-    console.log(this.properties.InitDate); console.log(this.properties.EndDate)
+    //console.log(this.properties.InitDate); console.log(this.properties.EndDate);
     console.log('¡Updated succesfully!');  
 }  
 

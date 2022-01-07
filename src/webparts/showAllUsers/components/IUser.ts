@@ -10,4 +10,6 @@ export interface IUser{
     birthdayMonth?:string;
     accountEnabled?:Boolean;
     aboutMe?:string;
+    jobTitle?:string;
+    department?:string;
 }
