@@ -185,25 +185,45 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                 mobilePhone: item.mobilePhone,
                 jobTitle:item.jobTitle,
                 userPrincipalName: item.userPrincipalName,};
-  
+              
+              await client
+              .api(`users/${item.mail}/photo/$value`)
+              .responseType("blob")
+              .get()
+              .then((blob:Blob):Promise<any>=>{
+                return new Promise(resolve=>{
+                  //console.log('Blob - ', blob);
+                  var reader = new FileReader();
+                  reader.readAsDataURL(blob);
+                  reader.onloadend = ()=> {
+                    var base64String = reader.result.toString();
+                    //console.log(base64String);
+                    this.setState({ user:{...user,profilePhoto:base64String} });
+                    allUsers.push(this.state.user);
+                    console.log(allUsers);
+                    resolve();
+                  };
+                });
+              });
+
               await client
                 .api(`users/${item.mail}`)
                 .version("v1.0")
                 .select("birthday,aboutMe,department")
   
                 .get().then((response1) => {
-
                   let userBirthday1=new Date(response1.birthday);
                   let userBirthdayDay=userBirthday1.getUTCDate();
                   let userBirthdayMonth=userBirthday1.getMonth();
                   let userBirthday=new Date(2000,userBirthdayMonth,userBirthdayDay);
-
+                  
                   this.setState({ user:{...user, birthday:userBirthday,aboutMe:response1.aboutMe,department:response1.department} });
-                }); 
+                });
+
               allUsers.push(this.state.user);
+              //console.log(this.state.user);
             }
           });
-          
           this.setState({ users: allUsers });
         });
     });
@@ -215,8 +235,12 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
         {this.state.users.filter(user=>user.birthday>=this.props.InitDate && user.birthday<=this.props.EndDate).sort((a,b)=>{return a.birthday>b.birthday?1:a.birthday<b.birthday?-1:0;}).map(filteredUser=>(
           <>
           <div className={styles.birthdayCard}>
-            <div className={styles.birthdayImg}>Imagen de fondo</div>
-            <div className={styles.birthdayCardProfileImg}><span className={styles.text}>Foto de perfil</span></div>
+            <div className={styles.birthdayImg}>
+
+            </div>
+            <div className={styles.birthdayCardProfileImg}>
+              <img src={filteredUser.profilePhoto}/>
+            </div>
             <div className={styles.birthdayContent}>
               <p>{filteredUser.displayName}</p>
               <p>{this._formatDate(filteredUser.birthday)}</p>

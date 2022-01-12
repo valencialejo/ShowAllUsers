@@ -12,4 +12,5 @@ export interface IUser{
     aboutMe?:string;
     jobTitle?:string;
     department?:string;
+    profilePhoto?:string;
 }
