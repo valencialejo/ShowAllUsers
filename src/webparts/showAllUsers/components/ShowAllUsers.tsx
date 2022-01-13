@@ -108,20 +108,20 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
     super(props);
 
     //Inicializar el State
-    var InitDate:Date=new Date(2000,0,7);
-    var EndDate:Date=new Date(2000,0,12);
+    var InitDate: Date = new Date(2000, 0, 7);
+    var EndDate: Date = new Date(2000, 0, 12);
 
     this.state = {
       user: undefined,
       users: [],
-      usersView:[],
+      usersView: [],
       dateofSearch: {
-        fullInitDate:InitDate.toString(),
-        dayInitDate:InitDate.getUTCDate().toString(),
-        monthInitDate:(InitDate.getUTCMonth()+1).toString(),
-        fullEndDate:EndDate.toString(),
-        dayEndDate:EndDate.getUTCDate().toString(),
-        monthEndDate:(EndDate.getUTCMonth()+1).toString(),
+        fullInitDate: InitDate.toString(),
+        dayInitDate: InitDate.getUTCDate().toString(),
+        monthInitDate: (InitDate.getUTCMonth() + 1).toString(),
+        fullEndDate: EndDate.toString(),
+        dayEndDate: EndDate.getUTCDate().toString(),
+        monthEndDate: (EndDate.getUTCMonth() + 1).toString(),
       },
     };
   }
@@ -134,13 +134,16 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
     this.fetchUserDetails();
   }
 
-  private _formatDate(date:Date):string {
+  private _formatDate(date: Date): string {
     const day = date.toLocaleString('default', { day: '2-digit' });
     const month = date.toLocaleString('default', { month: 'short' });
     const year = date.toLocaleString('default', { year: 'numeric' });
-    return day + ' ' + month[0].toUpperCase()+month.substring(1,month.length);
-}
+    return day + ' ' + month[0].toUpperCase() + month.substring(1, month.length);
+  }
 
+  public async blobToB64(blob) {
+    return new Promise((resolve, reject) => { const reader = new FileReader(); reader.readAsDataURL(blob); reader.onload = () => resolve(reader.result); reader.onerror = error => reject(error); });
+  }
   // @autobind
   // private _onSearchForChanged(newValue: string): void {
   //   this.setState({
@@ -175,53 +178,24 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
           var allUsers: Array<IUser> = new Array<IUser>();
 
           //Mapear el la respuesta JSON el array de salida
-          response.value.map(async(item: IUser) => {
-            if(item.mail!=null){
-              let user:IUser={
+          response.value.map(async (item: IUser) => {
+            if (item.mail != null) {
+              let user: IUser = {
+                profilePhoto: await this.getProfilePhoto(client, item),
+                ...await this.getBirthday(client, item),
+                id: item.id,
                 displayName: item.displayName,
                 givenName: item.displayName,
                 surname: item.surname,
                 mail: item.mail,
                 mobilePhone: item.mobilePhone,
-                jobTitle:item.jobTitle,
-                userPrincipalName: item.userPrincipalName,};
-              
-              await client
-              .api(`users/${item.mail}/photo/$value`)
-              .responseType("blob")
-              .get()
-              .then((blob:Blob):Promise<any>=>{
-                return new Promise(resolve=>{
-                  //console.log('Blob - ', blob);
-                  var reader = new FileReader();
-                  reader.readAsDataURL(blob);
-                  reader.onloadend = ()=> {
-                    var base64String = reader.result.toString();
-                    //console.log(base64String);
-                    this.setState({ user:{...user,profilePhoto:base64String} });
-                    allUsers.push(this.state.user);
-                    console.log(allUsers);
-                    resolve();
-                  };
-                });
-              });
+                jobTitle: item.jobTitle,
+                userPrincipalName: item.userPrincipalName,
+              };
 
-              await client
-                .api(`users/${item.mail}`)
-                .version("v1.0")
-                .select("birthday,aboutMe,department")
-  
-                .get().then((response1) => {
-                  let userBirthday1=new Date(response1.birthday);
-                  let userBirthdayDay=userBirthday1.getUTCDate();
-                  let userBirthdayMonth=userBirthday1.getMonth();
-                  let userBirthday=new Date(2000,userBirthdayMonth,userBirthdayDay);
-                  
-                  this.setState({ user:{...user, birthday:userBirthday,aboutMe:response1.aboutMe,department:response1.department} });
-                });
-
+              this.setState({ user: user });
+              console.log(this.state.user);
               allUsers.push(this.state.user);
-              //console.log(this.state.user);
             }
           });
           this.setState({ users: allUsers });
@@ -229,30 +203,70 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
     });
   }
 
+  public async getBirthday(client, item): Promise<object> {
+
+    return await client
+      .api(`users/${item.id}`)
+      .version("v1.0")
+      .select("birthday,aboutMe,department")
+      .get().then((response1) => {
+        var userBirthday: any;
+        let userBirthday1 = new Date(response1.birthday);
+        let userBirthdayDay = userBirthday1.getUTCDate();
+        let userBirthdayMonth = userBirthday1.getMonth();
+        let userBirthdayYear = userBirthday1.getFullYear();
+
+        if (userBirthdayYear == 0) {
+          userBirthday = null;
+        } else {
+          userBirthday = new Date(2000, userBirthdayMonth, userBirthdayDay);
+        }
+        return { birthday: userBirthday, aboutMe: response1.aboutMe, department: response1.department };
+      });
+  }
+
+  public async getProfilePhoto(client, item): Promise<string> {
+    try {
+      return await client
+        .api(`users/${item.id}/photo/$value`)
+        .responseType("blob")
+        .get()
+        .then(async (blob: Blob,error,callback) => {
+          if(error){
+            return " ";
+          }
+          return await this.blobToB64(blob);
+        });
+    } catch (error) {
+      return " ";
+    }
+
+  }
+
   public render(): React.ReactElement<IShowAllUsersProps> {
     return (
       <div className={styles.showAllUsers}>
-        {this.state.users.filter(user=>user.birthday>=this.props.InitDate && user.birthday<=this.props.EndDate).sort((a,b)=>{return a.birthday>b.birthday?1:a.birthday<b.birthday?-1:0;}).map(filteredUser=>(
+        {this.state.users.filter(user => user.birthday >= this.props.InitDate && user.birthday <= this.props.EndDate).sort((a, b) => { return a.birthday > b.birthday ? 1 : a.birthday < b.birthday ? -1 : 0; }).map(filteredUser => (
           <>
-          <div className={styles.birthdayCard}>
-            <div className={styles.birthdayImg}>
+            <div className={styles.birthdayCard}>
+              <div className={styles.birthdayImg}>
 
+              </div>
+              <div className={styles.birthdayCardProfileImg}>
+                <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
+              </div>
+              <div className={styles.birthdayContent}>
+                <p>{filteredUser.displayName}</p>
+                <p>{this._formatDate(filteredUser.birthday)}</p>
+                <p>{filteredUser.jobTitle}</p>
+                <p>{filteredUser.department}</p>
+                <p>Mis gustos:</p>
+                <p>{filteredUser.aboutMe}</p>
+              </div>
             </div>
-            <div className={styles.birthdayCardProfileImg}>
-              <img src={filteredUser.profilePhoto}/>
-            </div>
-            <div className={styles.birthdayContent}>
-              <p>{filteredUser.displayName}</p>
-              <p>{this._formatDate(filteredUser.birthday)}</p>
-              <p>{filteredUser.jobTitle}</p>
-              <p>{filteredUser.department}</p>
-              <p>Mis gustos:</p>
-              <p>{filteredUser.aboutMe}</p>
-            </div>
-          </div>
           </>
         ))}
       </div>
     );
-}
+  }
 }
