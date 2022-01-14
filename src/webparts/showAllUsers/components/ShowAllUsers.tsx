@@ -231,8 +231,8 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
         .api(`users/${item.id}/photo/$value`)
         .responseType("blob")
         .get()
-        .then(async (blob: Blob,error,callback) => {
-          if(error){
+        .then(async (blob: Blob, error, callback) => {
+          if (error) {
             return " ";
           }
           return await this.blobToB64(blob);
@@ -250,18 +250,19 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
           <>
             <div className={styles.birthdayCard}>
               <div className={styles.birthdayImg}>
-
+                <img src={require('../imgs/day.png')} className={styles.backgroundImg} alt="Error"/>
               </div>
               <div className={styles.birthdayCardProfileImg}>
                 <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
               </div>
               <div className={styles.birthdayContent}>
-                <p>{filteredUser.displayName}</p>
-                <p>{this._formatDate(filteredUser.birthday)}</p>
-                <p>{filteredUser.jobTitle}</p>
-                <p>{filteredUser.department}</p>
-                <p>Mis gustos:</p>
-                <p>{filteredUser.aboutMe}</p>
+                <p className={styles.displayName}>{filteredUser.displayName}</p>
+                <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
+                <hr className={styles.line}></hr>
+                {/* <p>{this._formatDate(filteredUser.birthday)}</p> */}
+                <p className={styles.department}>{filteredUser.department}</p>
+                <p className={styles.aboutMeTitle}>Mis gustos:</p>
+                <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
               </div>
             </div>
           </>

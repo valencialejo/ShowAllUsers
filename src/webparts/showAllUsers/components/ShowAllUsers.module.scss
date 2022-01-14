@@ -73,7 +73,6 @@
   }
 
   .birthdayCard{
-    border-style:solid; //Quitar
     width: 420px;
     height: 230px;
     background: #FFFFFF;
@@ -86,7 +85,11 @@
       left:0px;
       width: 150.21px;
       height: 230px;
-      border-style:solid;
+
+      .backgroundImg{
+        width: 150.21px;
+        height: 230px;
+      }
     }
     .birthdayContent{
       position:absolute;
@@ -95,16 +98,85 @@
       width: 177.21px;
       height: 164.42px;
       opacity: 1;
-      border-style: solid;
+
+      .displayName{
+        font-family: 'RedHatDisplay-Light', sans-serif;
+        text-align: left;
+        letter-spacing: 0;
+        color: #00369c;
+        opacity: 1;
+        font-size: 16px;
+        line-height: 19.2px;
+        margin: auto;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .jobTitle{
+        font-family: 'RedHatDisplay-Light',sans-serif;
+        text-align: left;
+        letter-spacing: 0;
+        color: #00369c;
+        opacity: 1;
+        font-size: 10px;
+        margin: 3px 3px 3px 0px;
+        line-height: 12px;
+      }
+
+      .line{
+        border: 1px solid #00369c;
+        opacity: 1;
+        width: 155.97px;
+        size: 1px;
+        background-color: #00369c;
+        left: 0;
+        margin: 5px 5px 5px 0px;
+        border-style: solid;
+      }
+
+      .department{
+        font-family: 'RedHatDisplay-Light',sans-serif;
+        text-align: left;
+        letter-spacing: 0;
+        color: #00369c;
+        opacity: 1;
+        font-size: 10px;
+        margin: 10px 10px 10px 0px;
+      }
+
+      .aboutMeTitle{
+        font-family: 'RedHatDisplay-Light',sans-serif;
+        text-align: left;
+        letter-spacing: 0;
+        color: #00369c;
+        opacity: 1;
+        font-size: 10px;
+        margin: 10px 10px 10px 0px;
+      }
+      
+      .aboutMe{
+        font-family: 'RedHatDisplay-Light',sans-serif;
+        text-align: left;
+        letter-spacing: 0;
+        color: #00369c;
+        opacity: 1;
+        line-height: 10px;
+        font-size: 10px;
+        max-height: 70px;
+        overflow: hidden;
+        text-align: justify;
+      }
+
     }
     .birthdayCardProfileImg{
       position: absolute;
-      top:40px;
-      left:26px;
+      top: 40px;
+      left: 26px;
       width: 151px;
-      height: 151px;        
+      height: 151px;
       border-radius: 50%;
-      border-style: solid;
+      border: 1px solid #3EC92B;
 
       .text{
         position: absolute;
