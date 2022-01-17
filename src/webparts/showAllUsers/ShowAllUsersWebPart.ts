@@ -20,8 +20,9 @@ import { thProperties } from 'office-ui-fabric-react';
 export interface IShowAllUsersWebPartProps {
   description: string;
   webparttype:string;
-  InitDate:Date;
-  EndDate:Date;
+  TodayDate:Date;
+  WeekDate:Date;
+  MonthDate:Date;
 }
 
 export default class ShowAllUsersWebPart extends BaseClientSideWebPart<IShowAllUsersWebPartProps> {
@@ -31,14 +32,13 @@ export default class ShowAllUsersWebPart extends BaseClientSideWebPart<IShowAllU
     return new Promise<void>((resolve,_reject)=>{
 
       var currentDate:Date=new Date(); var currentDay=currentDate.getUTCDate(); var currentMonth=currentDate.getUTCMonth();
-      this.properties.InitDate=new Date(2000,currentMonth,currentDay);
-      this.properties.EndDate=new Date(2000,currentMonth,currentDay);
+      this.properties.TodayDate=new Date(2000,currentMonth,currentDay);
+      this.properties.WeekDate=new Date(2000,currentMonth,currentDay+5);
+      this.properties.MonthDate=new Date(2000,currentMonth,currentDay+30);
 
-      this.properties.description="ShowAllUsers1";
-      this.properties.webparttype="today";
-
-      console.log(this.properties.InitDate);
-      console.log(this.properties.EndDate);
+      console.log(this.properties.TodayDate);
+      console.log(this.properties.WeekDate);
+      console.log(this.properties.MonthDate);
       resolve(undefined);
     });
   }
@@ -50,8 +50,9 @@ export default class ShowAllUsersWebPart extends BaseClientSideWebPart<IShowAllU
         description: this.properties.description,
         context:this.context,
         webparttype:this.properties.webparttype,
-        InitDate:this.properties.InitDate,
-        EndDate:this.properties.EndDate,
+        TodayDate:this.properties.TodayDate,
+        WeekDate:this.properties.WeekDate,
+        MonthDate:this.properties.MonthDate
       }
     );
 
@@ -68,25 +69,25 @@ export default class ShowAllUsersWebPart extends BaseClientSideWebPart<IShowAllU
 
   private ButtonClick(oldVal: any): any {
     
-    var currentDate:Date=new Date(); var currentDay=currentDate.getUTCDate(); var currentMonth=currentDate.getUTCMonth();
+    // var currentDate:Date=new Date(); var currentDay=currentDate.getUTCDate(); var currentMonth=currentDate.getUTCMonth();
     
-    this.properties.InitDate=new Date(2000,currentMonth,currentDay);
-    this.properties.EndDate=new Date(2000,currentMonth,currentDay);
-    var type=this.properties.webparttype;
-    var date=this.properties.InitDate;
-    var days: number;
+    // this.properties.InitDate=new Date(2000,currentMonth,currentDay);
+    // this.properties.EndDate=new Date(2000,currentMonth,currentDay);
+    // var type=this.properties.webparttype;
+    // var date=this.properties.InitDate;
+    // var days: number;
 
-    if (type=='today'){
-      days=0; 
-    }else if(type=='week'){
-      days=5;
-    }else if(type=='month'){
-      days=30;
-    }
+    // if (type=='today'){
+    //   days=0; 
+    // }else if(type=='week'){
+    //   days=5;
+    // }else if(type=='month'){
+    //   days=30;
+    // }
 
-    this.properties.EndDate.setDate(date.getDate()+days);
-    //console.log(this.properties.InitDate); console.log(this.properties.EndDate);
-    console.log('¡Updated succesfully!');  
+    // this.properties.EndDate.setDate(date.getDate()+days);
+    console.log(this.properties.TodayDate); console.log(this.properties.WeekDate); console.log(this.properties.MonthDate);
+    console.log('¡Updated succesfully!');
 }  
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {

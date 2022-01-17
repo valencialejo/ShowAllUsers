@@ -4,6 +4,7 @@ export interface IShowAllUsersProps {
   description: string;
   context: WebPartContext;
   webparttype:string;
-  InitDate:Date;
-  EndDate:Date;
+  TodayDate:Date;
+  WeekDate:Date;
+  MonthDate:Date;
 }

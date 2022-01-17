@@ -22,7 +22,7 @@
     "officeFabricIconFontName": "Page",
     "properties": {
       "description": "ShowAllUsers",
-      "webparttype":"today"
+      "webparttype":"week"
     }
   }]
 }

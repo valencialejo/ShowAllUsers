@@ -210,17 +210,21 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
       .version("v1.0")
       .select("birthday,aboutMe,department")
       .get().then((response1) => {
+
         var userBirthday: any;
         let userBirthday1 = new Date(response1.birthday);
         let userBirthdayDay = userBirthday1.getUTCDate();
-        let userBirthdayMonth = userBirthday1.getMonth();
+        let userBirthdayMonth = userBirthday1.getUTCMonth();
         let userBirthdayYear = userBirthday1.getFullYear();
+
+        
 
         if (userBirthdayYear == 0) {
           userBirthday = null;
         } else {
           userBirthday = new Date(2000, userBirthdayMonth, userBirthdayDay);
         }
+        console.log(item.displayName+";"+item.mail+";"+response1.birthday+";"+userBirthdayDay+";"+userBirthdayMonth+";"+userBirthday);
         return { birthday: userBirthday, aboutMe: response1.aboutMe, department: response1.department };
       });
   }
@@ -244,29 +248,79 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
   }
 
   public render(): React.ReactElement<IShowAllUsersProps> {
+
     return (
       <div className={styles.showAllUsers}>
-        {this.state.users.filter(user => user.birthday >= this.props.InitDate && user.birthday <= this.props.EndDate).sort((a, b) => { return a.birthday > b.birthday ? 1 : a.birthday < b.birthday ? -1 : 0; }).map(filteredUser => (
-          <>
-            <div className={styles.birthdayCard}>
-              <div className={styles.birthdayImg}>
-                <img src={require('../imgs/day.png')} className={styles.backgroundImg} alt="Error"/>
+        <div className={styles.todayBirthday}>
+          <div className={styles.title}>Cumpleañeros de hoy</div>
+          {this.state.users.filter(user => user.birthday >= this.props.TodayDate && user.birthday <= this.props.TodayDate).map(filteredUser => (
+            <>
+              <div className={styles.birthdayCard}>
+                <div className={styles.birthdayImg}>
+                  <img src={require('../imgs/day.png')} className={styles.backgroundImg} alt="Error" />
+                </div>
+                <div className={styles.birthdayCardProfileImg}>
+                  <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
+                </div>
+                <div className={styles.birthdayContent}>
+                  <p className={styles.displayName}>{filteredUser.displayName}</p>
+                  <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
+                  <hr className={styles.line}></hr>
+                  <p className={styles.department}>{filteredUser.department}</p>
+                  <p className={styles.aboutMeTitle}>Mis gustos:</p>
+                  <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
+                </div>
               </div>
-              <div className={styles.birthdayCardProfileImg}>
-                <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
+            </>
+          ))}
+        </div>
+
+        <div className={styles.weekBirthday}>
+          <h1 className={styles.title}>Cumpleañeros de la semana</h1>
+          {this.state.users.filter(user => user.birthday > this.props.TodayDate && user.birthday <= this.props.WeekDate).sort((a, b) => { return a.birthday > b.birthday ? 1 : a.birthday < b.birthday ? -1 : 0; }).map(filteredUser => (
+            <>
+              <div className={styles.birthdayCard}>
+                <div className={styles.birthdayImg}>
+                  <img src={require('../imgs/week.png')} className={styles.backgroundImg} alt="Error" />
+                </div>
+                <div className={styles.birthdayCardProfileImg}>
+                  <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
+                </div>
+                <div className={styles.birthdayContent}>
+                  <p className={styles.displayName}>{filteredUser.displayName}</p>
+                  <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
+                  <hr className={styles.line}></hr>
+                  <p className={styles.department}>{this._formatDate(filteredUser.birthday)}</p>
+                  <p className={styles.department}>{filteredUser.department}</p>
+                  <p className={styles.aboutMeTitle}>Mis gustos:</p>
+                  <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
+                </div>
               </div>
-              <div className={styles.birthdayContent}>
-                <p className={styles.displayName}>{filteredUser.displayName}</p>
-                <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
-                <hr className={styles.line}></hr>
-                {/* <p>{this._formatDate(filteredUser.birthday)}</p> */}
-                <p className={styles.department}>{filteredUser.department}</p>
-                <p className={styles.aboutMeTitle}>Mis gustos:</p>
-                <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
+            </>
+          ))}
+        </div>
+
+        <div className={styles.monthBirthday}>
+          <h1 className={styles.title}>Cumpleañeros del mes</h1>
+          {this.state.users.filter(user => user.birthday > this.props.WeekDate && user.birthday <= this.props.MonthDate).sort((a, b) => { return a.birthday > b.birthday ? 1 : a.birthday < b.birthday ? -1 : 0; }).map(filteredUser => (
+            <>
+              <div className={styles.birthdayCard}>
+                <div className={styles.birthdayImg}>
+                  <img src={require('../imgs/month.png')} className={styles.backgroundImg} alt="Error" />
+                </div>
+                <div className={styles.birthdayContent}>
+                  <p className={styles.displayName}>{filteredUser.displayName}</p>
+                  <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
+                  <hr className={styles.line}></hr>
+                  <p className={styles.department}>{this._formatDate(filteredUser.birthday)}</p>
+                  <p className={styles.department}>{filteredUser.department}</p>
+                  <p className={styles.aboutMeTitle}>Mis gustos:</p>
+                  <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
+                </div>
               </div>
-            </div>
-          </>
-        ))}
+            </>
+          ))}
+        </div>
       </div>
     );
   }
