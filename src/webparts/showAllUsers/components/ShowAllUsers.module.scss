@@ -1,5 +1,7 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
-
+html {
+  font-size: 100%;
+}
 .showAllUsers {
   .container {
     background-color: $ms-color-themeDark;
@@ -76,6 +78,8 @@
 
   .todayBirthday{
 
+    font-size:24px;
+
     .title{
       position: relative;
       text-align: left;
@@ -88,89 +92,142 @@
     }
 
     .birthdayCard{
-      width: 420px;
-      height: 230px;
+      width: 16.5em;
+      height: 9.58em;
       background: #FFFFFF;
       opacity: 1;
       position: relative;
+      padding: 0.67em 1em 0.67em 0em;
   
-      .birthdayImg{
+      .birthdayBackground{
         position:absolute;
-        top:0px;
-        left:0px;
-        width: 150.21px;
-        height: 230px;
-  
-        .backgroundImg{
-          width: 150.21px;
-          height: 230px;
+        width: 100%;
+        height: 100%;
+        top:0em;
+        
+        .background1{
+          position: absolute;
+          top:0.67em;
+          left: 0em;
+          width: 6.5em;
+          height: 9.58em;
         }
+
+        .background2{
+          position: absolute;
+          top:0.67em;
+          right: 0em;
+          width: 2.11em;
+          height: 2.19em;
+        }
+
+
       }
       .birthdayContent{
-        position:absolute;
-        top: 33px;
-        left: 208.54px;
-        width: 177.21px;
-        height: 164.42px;
+        position: absolute;
+        top: 0.67em;
+        left: 8.08em;
+        width: 7.38em;
+        height: 6.85em;
         opacity: 1;
+        border-style: solid;
   
         .displayName{
+          position:absolute;
+          top:0em;
+          left:0em;
           font-family: 'RedHatDisplay-Light', sans-serif;
           text-align: left;
           letter-spacing: 0;
-          color: #00369c;
+          color: #3EC92B;
           opacity: 1;
-          font-size: 16px;
-          line-height: 19.2px;
-          margin: auto;
+          font-size: 1rem;
+          line-height: 0.8em;
+          margin: 0em;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
+          border-style: solid;
+          width: 8.42em;
+          height: 1.67em;
+          max-width: 8.42em;
+          max-height: 1.67em;
+          font-weight: bold;
+          
+          .name{
+            position:absolute;
+            top:0em;
+            margin: 0 0 0.26em 0;
+          }
+
+          .surname{
+            position:relative;
+            top:0.93em;
+            margin: 0em;
+          }
         }
   
         .jobTitle{
+          position:absolute;
+          top:18px;
+          left:0px;
           font-family: 'RedHatDisplay-Light',sans-serif;
           text-align: left;
           letter-spacing: 0;
           color: #00369c;
           opacity: 1;
           font-size: 10px;
-          margin: 3px 3px 3px 0px;
+          margin: 0px;
           line-height: 12px;
+          border-style: solid;
         }
   
         .line{
+          position:absolute;
+          top:37.38px;
+          left:0px;
           border: 1px solid #00369c;
           opacity: 1;
           width: 155.97px;
           size: 1px;
           background-color: #00369c;
           left: 0;
-          margin: 5px 5px 5px 0px;
+          margin:0px;
           border-style: solid;
         }
   
         .department{
+          position:absolute;
+          top:44px;
+          left:0px;
           font-family: 'RedHatDisplay-Light',sans-serif;
           text-align: left;
           letter-spacing: 0;
           color: #00369c;
           opacity: 1;
           font-size: 10px;
-          margin: 10px 10px 10px 0px;
+          margin:0px;
+          border-style: solid;
         }
   
         .aboutMeTitle{
+          position:absolute;
+          top:62.5px;
+          left:0px;
           font-family: 'RedHatDisplay-Light',sans-serif;
           text-align: left;
           letter-spacing: 0;
           color: #00369c;
           opacity: 1;
           font-size: 10px;
-          margin: 10px 10px 10px 0px;
+          margin:0px;
+          border-style: solid;
         }
         
         .aboutMe{
+          position:absolute;
+          top:77.6px;
+          left:0px;
           font-family: 'RedHatDisplay-Light',sans-serif;
           text-align: left;
           letter-spacing: 0;
@@ -181,15 +238,16 @@
           max-height: 70px;
           overflow: hidden;
           text-align: justify;
+          border-style: solid;
         }
   
       }
       .birthdayCardProfileImg{
         position: absolute;
-        top: 40px;
-        left: 26px;
-        width: 151px;
-        height: 151px;
+        top: 2.3125em;
+        left: 1.15em;
+        width: 6.25em;
+        height: 6.25em;
         border-radius: 50%;
         border: 1px solid #3EC92B;
   
@@ -206,8 +264,8 @@
   
         .profilePhoto{
           position:absolute;
-          width: 151px;
-          height: 151px;
+          width: 6.25em;
+          height: 6.25em;
           border-radius:50%;
         }
         

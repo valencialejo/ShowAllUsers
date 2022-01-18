@@ -185,7 +185,7 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                 ...await this.getBirthday(client, item),
                 id: item.id,
                 displayName: item.displayName,
-                givenName: item.displayName,
+                givenName: item.givenName,
                 surname: item.surname,
                 mail: item.mail,
                 mobilePhone: item.mobilePhone,
@@ -217,14 +217,14 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
         let userBirthdayMonth = userBirthday1.getUTCMonth();
         let userBirthdayYear = userBirthday1.getFullYear();
 
-        
+
 
         if (userBirthdayYear == 0) {
           userBirthday = null;
         } else {
           userBirthday = new Date(2000, userBirthdayMonth, userBirthdayDay);
         }
-        console.log(item.displayName+";"+item.mail+";"+response1.birthday+";"+userBirthdayDay+";"+userBirthdayMonth+";"+userBirthday);
+        console.log(item.displayName + ";" + item.mail + ";" + response1.birthday + ";" + userBirthdayDay + ";" + userBirthdayMonth + ";" + userBirthday);
         return { birthday: userBirthday, aboutMe: response1.aboutMe, department: response1.department };
       });
   }
@@ -256,14 +256,22 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
           {this.state.users.filter(user => user.birthday >= this.props.TodayDate && user.birthday <= this.props.TodayDate).map(filteredUser => (
             <>
               <div className={styles.birthdayCard}>
-                <div className={styles.birthdayImg}>
-                  <img src={require('../imgs/day.png')} className={styles.backgroundImg} alt="Error" />
+                <div className={styles.birthdayBackground}>
+                  <div className={styles.background1}>
+                    <img src={require('../imgs/today1.png')} alt="Error" />
+                  </div>
+                  <div className={styles.background2}>
+                    <img src={require('../imgs/today2.png')} alt="Error" />
+                  </div>
                 </div>
                 <div className={styles.birthdayCardProfileImg}>
                   <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
                 </div>
                 <div className={styles.birthdayContent}>
-                  <p className={styles.displayName}>{filteredUser.displayName}</p>
+                  <div className={styles.displayName}>
+                    <p className={styles.name}>{filteredUser.givenName}</p>
+                    <p className={styles.surname}>{filteredUser.surname}</p>
+                  </div>
                   <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
                   <hr className={styles.line}></hr>
                   <p className={styles.department}>{filteredUser.department}</p>
@@ -287,7 +295,10 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                   <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
                 </div>
                 <div className={styles.birthdayContent}>
-                  <p className={styles.displayName}>{filteredUser.displayName}</p>
+                  <div className={styles.displayName}>
+                    <p className={styles.name}>{filteredUser.givenName}</p>
+                    <p className={styles.surname}>{filteredUser.surname}</p>
+                  </div>
                   <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
                   <hr className={styles.line}></hr>
                   <p className={styles.department}>{this._formatDate(filteredUser.birthday)}</p>
