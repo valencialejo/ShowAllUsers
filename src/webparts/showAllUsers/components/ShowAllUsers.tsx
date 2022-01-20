@@ -136,9 +136,9 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
 
   private _formatDate(date: Date): string {
     const day = date.toLocaleString('default', { day: '2-digit' });
-    const month = date.toLocaleString('default', { month: 'short' });
+    const month = date.toLocaleString('default', { month: 'long' });
     const year = date.toLocaleString('default', { year: 'numeric' });
-    return day + ' ' + month[0].toUpperCase() + month.substring(1, month.length);
+    return day + ' de ' + month;
   }
 
   public async blobToB64(blob) {
@@ -257,12 +257,8 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
             <>
               <div className={styles.birthdayCard}>
                 <div className={styles.birthdayBackground}>
-                  <div className={styles.background1}>
-                    <img src={require('../imgs/today1.png')} alt="Error" />
-                  </div>
-                  <div className={styles.background2}>
-                    <img src={require('../imgs/today2.png')} alt="Error" />
-                  </div>
+                  <img src={require('../imgs/today1.png')} className={styles.background1} alt="Error" />
+                  <img src={require('../imgs/today2.png')} className={styles.background2} alt="Error" />
                 </div>
                 <div className={styles.birthdayCardProfileImg}>
                   <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
@@ -272,8 +268,9 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                     <p className={styles.name}>{filteredUser.givenName}</p>
                     <p className={styles.surname}>{filteredUser.surname}</p>
                   </div>
+                  <hr className={styles.line1}></hr>
                   <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
-                  <hr className={styles.line}></hr>
+                  <hr className={styles.line2}></hr>
                   <p className={styles.department}>{filteredUser.department}</p>
                   <p className={styles.aboutMeTitle}>Mis gustos:</p>
                   <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
@@ -288,8 +285,9 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
           {this.state.users.filter(user => user.birthday > this.props.TodayDate && user.birthday <= this.props.WeekDate).sort((a, b) => { return a.birthday > b.birthday ? 1 : a.birthday < b.birthday ? -1 : 0; }).map(filteredUser => (
             <>
               <div className={styles.birthdayCard}>
-                <div className={styles.birthdayImg}>
-                  <img src={require('../imgs/week.png')} className={styles.backgroundImg} alt="Error" />
+                <div className={styles.birthdayBackground}>
+                  <img src={require('../imgs/week1.png')} className={styles.background1} alt="Error" />
+                  <img src={require('../imgs/week2.png')} className={styles.background2} alt="Error" />
                 </div>
                 <div className={styles.birthdayCardProfileImg}>
                   <img src={filteredUser.profilePhoto} className={styles.profilePhoto} />
@@ -299,10 +297,13 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                     <p className={styles.name}>{filteredUser.givenName}</p>
                     <p className={styles.surname}>{filteredUser.surname}</p>
                   </div>
+                  <hr className={styles.line1}></hr>
                   <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
-                  <hr className={styles.line}></hr>
-                  <p className={styles.department}>{this._formatDate(filteredUser.birthday)}</p>
                   <p className={styles.department}>{filteredUser.department}</p>
+                  <hr className={styles.line2}></hr>
+                  <p className={styles.birthday}><span className={styles.text}>Día: </span><span className={styles.date}>{this._formatDate(filteredUser.birthday)}</span></p>
+                  <hr className={styles.line3}></hr>
+
                   <p className={styles.aboutMeTitle}>Mis gustos:</p>
                   <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
                 </div>
@@ -316,17 +317,18 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
           {this.state.users.filter(user => user.birthday > this.props.WeekDate && user.birthday <= this.props.MonthDate).sort((a, b) => { return a.birthday > b.birthday ? 1 : a.birthday < b.birthday ? -1 : 0; }).map(filteredUser => (
             <>
               <div className={styles.birthdayCard}>
-                <div className={styles.birthdayImg}>
-                  <img src={require('../imgs/month.png')} className={styles.backgroundImg} alt="Error" />
+                <div className={styles.birthdayBackground}>
+                  <img src={require('../imgs/month1.png')} className={styles.background1} alt="Error" />
+                  <img src={require('../imgs/month2.png')} className={styles.background2} alt="Error" />
                 </div>
                 <div className={styles.birthdayContent}>
-                  <p className={styles.displayName}>{filteredUser.displayName}</p>
+                  <div className={styles.displayName}>
+                    <p className={styles.name}>{filteredUser.givenName}</p>
+                    <p className={styles.surname}>{filteredUser.surname}</p>
+                  </div>
                   <p className={styles.jobTitle}>{filteredUser.jobTitle}</p>
-                  <hr className={styles.line}></hr>
-                  <p className={styles.department}>{this._formatDate(filteredUser.birthday)}</p>
-                  <p className={styles.department}>{filteredUser.department}</p>
-                  <p className={styles.aboutMeTitle}>Mis gustos:</p>
-                  <p className={styles.aboutMe}>{filteredUser.aboutMe}Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida dictum fusce ut placerat orci. Odio eu feugiat pretium nibh ipsum consequat. Nullam ac tortor vitae purus faucibus. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Quis varius quam quisque id diam vel. Lectus nulla at volutpat diam ut venenatis tellus in. Leo urna molestie at elementum eu facilisis sed odio morbi. Ut tristique et egestas quis. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Volutpat commodo sed egestas egestas fringilla. Dapibus ultrices in iaculis nunc sed augue lacus. Amet risus nullam eget felis eget. Dignissim sodales ut eu sem. Ut ornare lectus sit amet est placerat in egestas. Tristique magna sit amet purus gravida quis blandit turpis cursus. Orci dapibus ultrices in iaculis nunc sed. Enim ut tellus elementum sagittis vitae et leo duis ut.</p>
+                  <hr className={styles.line1}></hr>
+                  <p className={styles.birthday}><span className={styles.text}>Día: </span><span className={styles.date}>{this._formatDate(filteredUser.birthday)}</span></p>
                 </div>
               </div>
             </>
