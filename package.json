@@ -25,9 +25,11 @@
     "bootstrap": "^4.6.1",
     "jquery": "^3.6.0",
     "office-ui-fabric-react": "6.189.2",
-    "react": "16.8.5",
+    "react": "^16.8.5",
     "react-bootstrap": "^1.0.1",
     "react-dom": "16.8.5",
+    "react-swiper": "^0.1.5",
+    "swiper": "^6.8.4",
     "typescript": "^3.8.3"
   },
   "resolutions": {

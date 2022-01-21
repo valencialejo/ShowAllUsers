@@ -75,6 +75,9 @@ html {
   }
 
   .todayBirthday{
+    width: 100%;
+    // border: 1px green solid;
+    height: 100%;
 
     .title{
       position: relative;
@@ -93,8 +96,9 @@ html {
       background: #FFFFFF;
       opacity: 1;
       position: relative;
-      padding: 1rem 1.5rem 1em 0em;
-  
+      padding: 1rem 1.5rem 1rem 0rem;
+      box-sizing: content-box;
+
       .birthdayBackground{
         position:absolute;
         width: 100%;
@@ -274,6 +278,8 @@ html {
   }
 
   .weekBirthday{
+    width: 100%;
+    height: 100%;
 
     .title{
       position: relative;
@@ -293,6 +299,7 @@ html {
       opacity: 1;
       position: relative;
       padding: 1rem 1rem 1em 0em;
+      box-sizing: content-box;
   
       .birthdayBackground{
         position:absolute;
@@ -336,7 +343,7 @@ html {
           letter-spacing: 0;
           color: #00369C;
           opacity: 1;
-          font-size: 1rem;
+          font-size: 0.875rem;
           line-height: 1rem;
           margin: 0rem;
           width: 100%;
@@ -500,6 +507,8 @@ html {
   }
 
   .monthBirthday{
+    width: 100%;
+    height: 100%;
 
     .title{
       position: relative;
@@ -519,6 +528,7 @@ html {
       opacity: 1;
       position: relative;
       padding: 0 0.5rem 1.5rem 0.5em;
+      box-sizing: content-box;
   
       .birthdayBackground{
         position:absolute;
