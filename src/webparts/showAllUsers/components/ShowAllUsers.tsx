@@ -143,9 +143,9 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
     };
   }
 
-  public componentDidMount(): void {
-    this.fetchUserDetails();
-  }
+  // public componentDidMount(): void {
+  //   this.fetchUserDetails();
+  // }
   // @autobind
   // public _search(): void {
   //   this.fetchUserDetails();
@@ -271,7 +271,7 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
         <div className={styles.todayBirthday}>
           <div className={styles.title}>Cumpleañeros de hoy</div>
           <Swiper            
-            spaceBetween={150}
+            spaceBetween={10}
             slidesPerView={2}
             navigation={true}      
             autoplay={
@@ -280,17 +280,17 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                 disableOnInteraction: false
               }
             }
-            // breakpoints = {{
-            //   0: {
-            //     slidesPerView: 1,
-            //   },
-            //   768: {
-            //     slidesPerView: 2,
-            //   },
-            //   1200: {
-            //     slidesPerView: 3,
-            //   }
-            // }}
+            breakpoints = {{
+              0: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              1200: {
+                slidesPerView: 3,
+              }
+            }}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
           >
@@ -368,7 +368,59 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
               </div>
             </SwiperSlide> */}
 
-            {this.state.users.filter(user => user.birthday >= this.props.TodayDate && user.birthday <= this.props.TodayDate).map(filteredUser => (
+            <SwiperSlide>
+              <div className={`container`} style={{ border:'1px blue solid', height:500}}>
+                <div className="row">
+                  <div className={`col-3 col-sm-3 col-md-6 col-lg-4 col-xl-6`} style={{ border:'1px green solid',height:250 }}>
+                    Columna 1
+                  </div>
+                  <div className={`${styles.hola} col-9 col-sm-9 col-md-6 col-lg-8 col-xl-6`}>
+                    Columna 2
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className={`container`} style={{ border:'1px blue solid', height:500}}>
+                <div className="row">
+                  <div className={`col-3 col-sm-3 col-md-6 col-lg-4 col-xl-6`} style={{ border:'1px green solid',height:250 }}>
+                    Columna 1
+                  </div>
+                  <div className={`${styles.hola} col-9 col-sm-9 col-md-6 col-lg-8 col-xl-6`}>
+                    Columna 2
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className={`container`} style={{ border:'1px blue solid', height:500}}>
+                <div className="row">
+                  <div className={`col-3 col-sm-3 col-md-6 col-lg-4 col-xl-6`} style={{ border:'1px green solid',height:250 }}>
+                    Columna 1
+                  </div>
+                  <div className={`${styles.hola} col-9 col-sm-9 col-md-6 col-lg-8 col-xl-6`}>
+                    Columna 2
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className={`container`} style={{ border:'1px blue solid', height:500}}>
+                <div className="row">
+                  <div className={`col-3 col-sm-3 col-md-6 col-lg-4 col-xl-6`} style={{ border:'1px green solid',height:250 }}>
+                    Columna 1
+                  </div>
+                  <div className={`${styles.hola} col-9 col-sm-9 col-md-6 col-lg-8 col-xl-6`}>
+                    Columna 2
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+
+            {/* {this.state.users.filter(user => user.birthday >= this.props.TodayDate && user.birthday <= this.props.TodayDate).map(filteredUser => (
               <SwiperSlide>
                 <div className={styles.birthdayCard}>
                   <div className={styles.birthdayBackground}>
@@ -392,11 +444,11 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
                   </div>
                 </div>
               </SwiperSlide>
-          ))}
+          ))} */}
           </Swiper>
         </div>
 
-        <div className={styles.weekBirthday}>
+        {/* <div className={styles.weekBirthday}>
           <div className={styles.title}>Cumpleañeros de la semana</div>
           <Swiper            
             spaceBetween={160}
@@ -440,9 +492,9 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
             </SwiperSlide>
           ))}
           </Swiper>
-        </div>
-
-        <div className={styles.monthBirthday}>
+        </div> */}
+        
+        {/* <div className={styles.monthBirthday}>
           <div className={styles.title}>Cumpleañeros del mes</div>
           <Swiper            
             spaceBetween={80}
@@ -477,7 +529,7 @@ export default class ShowAllUsers extends React.Component<IShowAllUsersProps, IS
             </SwiperSlide>
           ))}
           </Swiper>
-        </div>
+        </div> */}
       </div>
     );
   }

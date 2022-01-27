@@ -2,102 +2,136 @@
 html {
   font-size: 100%;
 }
+
+$grid-breakpoints:(
+  xs:0,
+  sm:576px,
+  md:768px,
+  lg:992px,
+  xl:1200px,
+  xxl:1400px
+);
+
 .showAllUsers {
-  .container {
-    background-color: $ms-color-themeDark;
-    border-style: solid;
-    padding:20px;
-  }
+  // .container {
+  //   background-color: $ms-color-themeDark;
+  //   border-style: solid;
+  //   padding:20px;
+  // }
 
-  .row {
-    @include ms-Grid-row;
-    @include ms-fontColor-white;
-    background-color: $ms-color-themeDark;
-    padding: 20px;
-  }
+  // .row {
+  //   @include ms-Grid-row;
+  //   @include ms-fontColor-white;
+  //   background-color: $ms-color-themeDark;
+  //   padding: 20px;
+  // }
 
-  .column {
-    @include ms-Grid-col;
-    @include ms-lg10;
-    @include ms-xl8;
-    @include ms-xlPush2;
-    @include ms-lgPush1;
-  }
+  // .column {
+  //   @include ms-Grid-col;
+  //   @include ms-lg10;
+  //   @include ms-xl8;
+  //   @include ms-xlPush2;
+  //   @include ms-lgPush1;
+  // }
 
-  .title {
-    @include ms-font-xl;
-    @include ms-fontColor-white;
-  }
+  // .title {
+  //   @include ms-font-xl;
+  //   @include ms-fontColor-white;
+  // }
 
-  .subTitle {
-    @include ms-font-l;
-    @include ms-fontColor-white;
-  }
+  // .subTitle {
+  //   @include ms-font-l;
+  //   @include ms-fontColor-white;
+  // }
 
-  .description {
-    @include ms-font-l;
-    @include ms-fontColor-white;
-  }
+  // .description {
+  //   @include ms-font-l;
+  //   @include ms-fontColor-white;
+  // }
 
-  .button {
-    // Our button
-    text-decoration: none;
-    height: 32px;
+  // .button {
+  //   // Our button
+  //   text-decoration: none;
+  //   height: 32px;
 
-    // Primary Button
-    min-width: 80px;
-    background-color: $ms-color-themePrimary;
-    border-color: $ms-color-themePrimary;
-    color: $ms-color-white;
+  //   // Primary Button
+  //   min-width: 80px;
+  //   background-color: $ms-color-themePrimary;
+  //   border-color: $ms-color-themePrimary;
+  //   color: $ms-color-white;
 
-    // Basic Button
-    outline: transparent;
-    position: relative;
-    font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-size: $ms-font-size-m;
-    font-weight: $ms-font-weight-regular;
-    border-width: 0;
-    text-align: center;
-    cursor: pointer;
-    display: inline-block;
-    padding: 0 16px;
+  //   // Basic Button
+  //   outline: transparent;
+  //   position: relative;
+  //   font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+  //   -webkit-font-smoothing: antialiased;
+  //   font-size: $ms-font-size-m;
+  //   font-weight: $ms-font-weight-regular;
+  //   border-width: 0;
+  //   text-align: center;
+  //   cursor: pointer;
+  //   display: inline-block;
+  //   padding: 0 16px;
 
-    .label {
-      font-weight: $ms-font-weight-semibold;
-      font-size: $ms-font-size-m;
-      height: 32px;
-      line-height: 32px;
-      margin: 0 4px;
-      vertical-align: top;
-      display: inline-block;
-    }
+  //   .label {
+  //     font-weight: $ms-font-weight-semibold;
+  //     font-size: $ms-font-size-m;
+  //     height: 32px;
+  //     line-height: 32px;
+  //     margin: 0 4px;
+  //     vertical-align: top;
+  //     display: inline-block;
+  //   }
+  // }
+
+  .hola{
+    width: 100%;
+    border: 1px blue solid;
+    height: 100%;
   }
 
   .todayBirthday{
     width: 100%;
-    // border: 1px green solid;
+    border: 1px green solid;
     height: 100%;
 
     .title{
       position: relative;
       text-align: left;
-      font-family: 'RedHatDisplay',sans-serif;
-      font-size: 1.875rem;
-      font-weight: bold;
-      color:#000000;
-      opacity: 1;
-      margin: 0.625rem;
-    }
 
+      @media screen and (max-width: map-get($grid-breakpoints, 'xl')) and (min-width: map-get($grid-breakpoints, 'md')){
+        font-family: 'RedHatDisplay',sans-serif;
+        font-size: 1.875rem;
+        font-weight: bold;
+        color:#000000;
+        opacity: 1;
+        margin: 0.625rem;
+      }
+      @media screen and (max-width: map-get($grid-breakpoints,'xxl')) and (min-width:map-get($grid-breakpoints, 'xl')){
+        font-family: 'RedHatDisplay',sans-serif;
+        font-size: 5rem;
+        font-weight: 100;
+        color:#03ecb2;
+        opacity: 0.5;
+        margin: 0rem;
+      }
+    }
+    
     .birthdayCard{
-      width: 24.75rem;
-      height: 14.375rem;
+      width: 100%;
+      height: 100%;
       background: #FFFFFF;
       opacity: 1;
       position: relative;
       padding: 1rem 1.5rem 1rem 0rem;
-      box-sizing: content-box;
+      // box-sizing: content-box;
+      border-style: solid;
+
+      .responsiveprueba{
+        left: 0;
+        height: 100%;
+        border: 1px green solid;
+      }
 
       .birthdayBackground{
         position:absolute;
@@ -649,6 +683,40 @@ html {
     }
 
   }
+
+  .card{
+    &__name{
+      &--lg{
+
+      }
+      &--md{
+
+      }
+      &--sm{
+
+      }
+    }
+
+    &__surname{
+      &--lg{
+
+      }
+      &--md{
+
+      }
+      &--sm{
+
+      }
+    }
+
+    &__profilePhoto
+
+
+  }
+
+
+  
+
 
 
 
